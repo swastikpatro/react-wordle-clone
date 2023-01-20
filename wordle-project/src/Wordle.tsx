@@ -4,10 +4,29 @@ import { formattedGuessType } from './types';
 import Keypad from './Keypad';
 import Modal from './Modal';
 import data from './data/data';
+import toast, { Toaster } from 'react-hot-toast';
+import { CiDark } from 'react-icons/ci';
+import { BsSun } from 'react-icons/bs';
 
 function getRandomItemFromArr(arr: { id: number; word: string }[]) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
+
+const notify = (msg: string, type: string) => {
+  if (type === 'error') {
+    toast.error(msg, {
+      duration: 1000,
+      position: 'top-center',
+    });
+  }
+
+  if (type === 'success') {
+    toast.success(msg, {
+      duration: 1000,
+      position: 'top-center',
+    });
+  }
+};
 
 const Wordle = () => {
   const { word } = getRandomItemFromArr(data.words);
@@ -20,7 +39,9 @@ const Wordle = () => {
   const [recordOfGuesses, setRecordOfGuess] = useState<string[]>([]);
   const [hasWon, setHasWon] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [theme, setTheme] = useState('light');
   const modalTimerRef = useRef<number | null>(null!);
+
   // const [usedKeys, setUsedKeys] = useState({});
   // format a guess into an array of letter objects
   // e.g. 'GHOST' => [{key: 'G', color: "yellow"}, {key: 'H', color: "green"}, {key: 'O', color: "grey"}, {key: 'S', color: "green"}, {key: 'T', color: "grey"}]
@@ -59,6 +80,7 @@ const Wordle = () => {
     arrWithObjectifiedGuessLetters: formattedGuessType[]
   ) => {
     if (currentGuess === soln) {
+      notify('Hurray, you guessed it right!!', 'success');
       setHasWon(true);
       // return;
     }
@@ -97,16 +119,22 @@ const Wordle = () => {
 
     if (key === 'Enter') {
       if (currentGuess.length !== 5) {
-        console.log("Can't submit as length is not 5");
+        notify('Word should be 5 letters long.', 'error');
         return;
       }
       if (attempt === 6) {
-        console.log('GAME OVER');
+        // console.log('GAME OVER');
         return;
       }
 
       if (recordOfGuesses.includes(currentGuess)) {
-        console.log("Can't submit as you have already used that word");
+        const attemptOfGuessInHistory =
+          recordOfGuesses.indexOf(currentGuess) + 1;
+
+        notify(
+          `You already typed '${currentGuess}' in the ${attemptOfGuessInHistory} attempt.`,
+          'error'
+        );
         return;
       }
 
@@ -135,25 +163,6 @@ const Wordle = () => {
       }
   };
 
-  useEffect(() => {
-    window.addEventListener('keyup', handleInput);
-
-    if (hasWon) {
-      // console.log('Im here');
-
-      modalTimerRef.current = setTimeout(() => setShowModal(true), 1500);
-    }
-
-    if (attempt > 5) {
-      // console.log('Im here');
-      modalTimerRef.current = setTimeout(() => setShowModal(true), 1500);
-    }
-
-    return () => {
-      window.removeEventListener('keyup', handleInput);
-    };
-  }, [handleInput, hasWon, attempt]);
-
   const handleRetry = () => {
     if (modalTimerRef.current) {
       clearTimeout(modalTimerRef.current);
@@ -167,10 +176,38 @@ const Wordle = () => {
     setSoln((prev) => getRandomItemFromArr(data.words).word.toUpperCase());
   };
 
+  useEffect(() => {
+    window.addEventListener('keyup', handleInput);
+
+    if (hasWon) {
+      modalTimerRef.current = setTimeout(() => setShowModal(true), 1500);
+    }
+
+    if (attempt > 5) {
+      modalTimerRef.current = setTimeout(() => setShowModal(true), 1500);
+    }
+
+    return () => {
+      window.removeEventListener('keyup', handleInput);
+    };
+  }, [handleInput, hasWon, attempt]);
+
+  useEffect(() => {
+    document.documentElement.className = theme;
+  }, [theme]);
   return (
     <div className='App'>
       <nav>
         <h2>Wordle</h2>
+        {theme === 'light' ? (
+          <button onClick={() => setTheme('dark')}>
+            <CiDark />
+          </button>
+        ) : (
+          <button onClick={() => setTheme('light')}>
+            <BsSun />
+          </button>
+        )}
       </nav>
 
       <Grid
@@ -190,6 +227,7 @@ const Wordle = () => {
           hasWon={hasWon}
         />
       )}
+      <Toaster />
     </div>
   );
 };

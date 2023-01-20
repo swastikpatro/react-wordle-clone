@@ -1,5 +1,6 @@
 * {
   margin: 0;
+  padding: 0;
 }
 
 :root {
@@ -10,24 +11,82 @@
   --bounce-to: #333;
   --text-color-in-square: #eee;
   --overlay-background: rgba(255, 255, 255, 0.7);
+  --heading-color: #000;
+  --shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.light {
+  --background-main-start: #fff;
+  --background-main-end: #333;
+  --border-square-color: #bbb;
+  --bounce-from: #ddd;
+  --bounce-to: #333;
+  --text-color-in-square: #eee;
+  --overlay-background: rgba(255, 255, 255, 0.7);
+  --heading-color: #000;
+  --shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.dark {
+  --background-main-start: #000;
+  --background-main-end: #fff;
+  --border-square-color: #fff;
+  --bounce-from: #ddd;
+  --bounce-to: #eee;
+  --text-color-in-square: #fff;
+  --overlay-background: rgba(255, 255, 255, 0.7);
+  --heading-color: #fff;
+  --shadow: 2px 2px 10px rgba(255, 255, 255, 0.3);
 }
 
 body {
-  background: var(--background-main);
+  background: var(--background-main-start);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 nav {
   height: 3rem;
   /* border: 2px solid red; */
-  display: grid;
-  align-items: center;
   margin-bottom: 1rem;
+  box-shadow: var(--shadow);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
 }
 
 nav h2 {
   margin: 0;
   text-align: center;
+  color: var(--heading-color);
+  /* border: 2px solid red; */
+}
+
+nav button {
+  color: var(--background-main-end);
+  background: transparent;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  border-color: transparent;
+  margin-bottom: -.3rem;
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  display: grid;
+  padding: .25rem;
+}
+
+nav button:hover {
+  color: var(--background-main-start);
+  background: rgb(210, 210, 210);
+}
+
+@media screen and (min-width: 500px) {
+  nav {
+    padding-right:2rem;
+  }
+
+  nav h2 {
+    margin-right: -6rem;
+  }
 }
 
 .row {
@@ -47,6 +106,7 @@ nav h2 {
   font-size: 1.5rem;
   font-weight: 600;
   border: 2px solid var(--border-square-color);
+  color: var(--heading-color);
 }
 
 .row > .green {
@@ -74,14 +134,14 @@ nav h2 {
 @keyframes bounce {
   0% {
     transform: scale(0.8);
-    border-color: #ddd;
+    border-color: var(--bounce-from);
   }
   50% {
     transform: scale(1.1);
   }
   100% {
     transform: scale(1);
-    border-color: #333;
+    border-color: var(--bounce-to);
   }
 }
 
@@ -203,7 +263,7 @@ nav h2 {
   padding: 40px;
   border-radius: 10px;
   margin: 10% auto;
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--shadow);
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -226,8 +286,6 @@ nav h2 {
   width: fit-content;
   border-radius: .25rem;
   padding: .35rem .85rem;
-  background: var(--background-main-end);
-  color: var(--background-main-start);
   border-color: transparent;
   cursor: pointer;
   letter-spacing: 2px;
@@ -237,8 +295,6 @@ nav h2 {
 }
 
 .retry-btn:hover {
-  color: var(--background-main-end);
-  background: var(--border-square-color);
   transform: scale(1.02);
 }
 
