@@ -67,11 +67,11 @@ nav button {
   font-size: 1.5rem;
   border-radius: 50%;
   border-color: transparent;
-  margin-bottom: -.3rem;
+  margin-bottom: -0.3rem;
   cursor: pointer;
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   display: grid;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 
 nav button:hover {
@@ -81,7 +81,7 @@ nav button:hover {
 
 @media screen and (min-width: 500px) {
   nav {
-    padding-right:2rem;
+    padding-right: 2rem;
   }
 
   nav h2 {
@@ -185,7 +185,7 @@ nav button:hover {
 .keypad {
   width: 90vw;
   max-width: 500px;
-  margin: .5rem auto;
+  margin: 0.5rem auto;
   text-align: center;
   margin-top: 2rem;
 }
@@ -210,13 +210,13 @@ nav button:hover {
   margin: 5px;
   width: fit-content;
   height: fit-content;
-  padding: 0rem .5rem;
+  padding: 0rem 0.5rem;
   background: var(--text-color-in-square);
   display: inline-block;
   border-radius: 6px;
   line-height: 50px;
   cursor: pointer;
-  transition: all .5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 .keypad > div:hover {
@@ -240,7 +240,6 @@ nav button:hover {
   transition: all 0.3s ease-in;
 }
 
-
 .modal {
   background: var(--overlay-background);
   position: fixed;
@@ -256,7 +255,7 @@ nav button:hover {
   min-height: 10rem;
   margin: 0 auto;
   background: var(--background-main-start);
-  border-radius: .5rem;
+  border-radius: 0.5rem;
   padding: 2rem 1rem;
   max-width: 480px;
   background: #fff;
@@ -282,20 +281,18 @@ nav button:hover {
 .retry-btn {
   display: block;
   margin: 0 auto;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
   width: fit-content;
-  border-radius: .25rem;
-  padding: .35rem .85rem;
+  border-radius: 0.25rem;
+  padding: 0.35rem 0.85rem;
   border-color: transparent;
   cursor: pointer;
   letter-spacing: 2px;
   font-size: 1rem;
-  transform: scale(.9);
-  transition: all .3s ease-in-out;
+  transform: scale(0.9);
+  transition: all 0.3s ease-in-out;
 }
 
 .retry-btn:hover {
   transform: scale(1.02);
 }
-
-/* keyframe animations
